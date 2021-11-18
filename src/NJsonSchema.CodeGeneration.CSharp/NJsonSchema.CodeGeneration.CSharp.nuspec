@@ -6,7 +6,7 @@
         <authors>$author$</authors>
         <description>$description$</description>
         <tags>json schema validation generator codegen .net</tags>
-        <projectUrl>http://NJsonSchema.org</projectUrl>
+        <projectUrl>https://github.com/cloud-devlpr/NJsonSchema</projectUrl>
         <licenseUrl>https://github.com/RicoSuter/NJsonSchema/blob/master/LICENSE.md</licenseUrl>
     </metadata>
     <files>
