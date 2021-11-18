@@ -20,9 +20,7 @@ jobs:
       run: dotnet build src/NJsonSchema.CodeGeneration.CSharp/NJsonSchema.CodeGeneration.CSharp.csproj --configuration Release --no-restore
     - name: Test
       run: dotnet test src/NJsonSchema.CodeGeneration.CSharp.Tests/NJsonSchema.CodeGeneration.CSharp.Tests.csproj --verbosity normal
-    - name: Publish cloud.devlpr.NJsonSchema.CodeGeneration.CSharp
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-          PROJECT_FILE_PATH: src/NJsonSchema.CodeGeneration.CSharp/NJsonSchema.CodeGeneration.CSharp.csproj
-          NUGET_KEY: ${{secrets.NUGETAPIKEY}}
-          PACKAGE_NAME: cloud.devlpr.NJsonSchema.CodeGeneration.CSharp
+    - name: pack
+      run: dotnet pack -p:PackageID=cloud.devlpr.NJsonSchema.CodeGeneration.CSharp --no-build -c Release src/NJsonSchema.CodeGeneration.CSharp/NJsonSchema.CodeGeneration.CSharp.csproj -o .
+    - name: publish
+      run: dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGETAPIKEY}} --skip-duplicate -n 1
