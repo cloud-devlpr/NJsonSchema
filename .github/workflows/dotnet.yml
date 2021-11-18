@@ -15,7 +15,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore src/NJsonSchema.CodeGeneration.CSharp/NJsonSchema.CodeGeneration.CSharp.csproj
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Publish NJsonSchema.CodeGeneration.CSharp
