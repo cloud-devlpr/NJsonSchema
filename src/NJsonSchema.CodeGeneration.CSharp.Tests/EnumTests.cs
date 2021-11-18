@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using NJsonSchema.CodeGeneration.CSharp;
 using NJsonSchema.Generation;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -566,6 +567,40 @@ namespace NJsonSchema.CodeGeneration.Tests.CSharp
 
             //// Assert
             Assert.Contains("public MyClassCategory? Category { get; set; } = MyNamespace.MyClassCategory.Commercial;", code);
+        }
+
+        [Fact]
+        public async Task EnumHasStringConverterAttribute()
+        {
+            //// Arrange
+            var json =
+            @"{
+            ""type"": ""object"",
+            ""required"": [
+                ""name"",
+                ""photoUrls"",
+                ""status""
+            ],
+            ""properties"": {
+                ""status"": {
+                    ""type"": ""string"",
+                    ""description"": ""pet status in the store"",
+                    ""enum"": [
+                        ""available"",
+                        ""pending"",
+                        ""sold""
+                    ]
+                }
+            }
+             }";
+            var schema = await JsonSchema.FromJsonAsync(json);
+            var generator = new CSharpGenerator(schema, new CSharpGeneratorSettings { SchemaType = SchemaType.Swagger2 });
+
+            //// Act
+            var code = generator.GenerateFile("MyClass");
+
+            //// Assert
+            Assert.True(Regex.Matches(code, "Newtonsoft.Json.Converters.StringEnumConverter").Count == 2);
         }
     }
 }

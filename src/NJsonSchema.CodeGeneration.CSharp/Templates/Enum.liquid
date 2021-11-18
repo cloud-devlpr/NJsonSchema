@@ -2,6 +2,7 @@
 /// <summary>{{ Description | csharpdocs }}</summary>
 {%- endif -%}
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "{{ ToolchainVersion }}")]
+[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
 {%- if IsEnumAsBitFlags -%}
 [System.Flags]
 {%- endif -%}
